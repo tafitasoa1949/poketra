@@ -38,7 +38,7 @@
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
                                     <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Matériels</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Unité</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Employeur</li>
                                 </ol>
                             </nav>
                         </div>
@@ -64,27 +64,46 @@
                                     <table class="table">
                                         <thead class="bg-light">
                                         <tr class="border-0">
-                                            <th class="border-0">Unite</th>
-                                            <th class="border-0"></th>
-                                            <th class="border-0"></th>
+                                            <th class="border-0">Nom</th>
+                                            <th class="border-0">Poste</th>
+                                            <th class="border-0">Date de naissance</th>
+                                            <th class="border-0">Category</th>
+                                            <th class="border-0">Date d'embauche</th>
+                                            <th class="border-0">Taux horaire(Base)</th>
+                                            <th class="border-0">Taux horaire</th>
+                                            <th class="border-0">Anciennete</th>
                                         </tr>
                                         </thead>
-                                        <tbody th:if="${unitePage}">
-                                        <tr th:each="unite, rowStat : ${unitePage.content}">
-                                            <td th:text="${unite.nom}"></td>
-                                            <td>
-                                                <a class="btn btn-warning btn-rounded btn-fw"
-                                                   th:id="'modifier-' + ${rowStat.index}"
-                                                   th:attr="data-target='#myModal' + ${rowStat.index}">
-                                                    <i class="mdi mdi-autorenew"></i>
-                                                </a>
-                                            </td>
-                                            <td><a class="btn btn-danger btn-rounded btn-fw" th:href="@{/unite/delete/{id}(id=${unite.id})}"><i class="mdi mdi-delete"></i></a></td>
-                                        </tr>
+                                        <tbody th:if="${list_empOuvriers}">
+                                            <tr th:each="emp, rowStat : ${list_empOuvriers}">
+                                                <td th:text="${emp.employe.nom}"></td>
+                                                <td th:text="${emp.employe.poste.nom}"></td>
+                                                <td th:text="${emp.employe.date_naissance}"></td>
+                                                <td th:text="${emp.categoryEmploye.nom}"></td>
+                                                <td th:text="${emp.employe.date_embauche}"></td>
+                                                <td th:text="${emp.employe.taux_horaire}"></td>
+                                                <td th:text="${emp.taux_horaire}"></td>
+                                                <td th:text="${emp.anciennte}"></td>
+                                            </tr>
                                         </tbody>
                                     </table>
-                                    <!-- Afficher la pagination -->
-                                    <!-- ... -->
+                                    <div class="card-body border-top">
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination">
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span>      </a>
+                                                </li>
+                                                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                <li class="page-item">
+                                                    <a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span>
+                                                        <span class="sr-only">Next</span></a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -101,13 +120,34 @@
                         <div class="card">
                             <h5 class="card-header">Nouveau</h5>
                             <div class="card-body">
-                                <form th:action="@{/unite/insert}" method="post" id="basicform" data-parsley-validate="">
+                                <form th:action="@{/employe/insert}" method="post" id="basicform" data-parsley-validate="">
                                     <div class="form-group">
                                         <label for="inputUserName">Nom</label>
                                         <input id="inputUserName" type="text" name="nom" data-parsley-trigger="change" required="" placeholder="Entrer un nom" autocomplete="off" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-space btn-primary">Ajouter</button>
+                                        <label for="inputUserName">Date de naissance</label>
+                                        <input id="inputUserName" type="date" name="dtn" data-parsley-trigger="change" required="" autocomplete="off" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mm">Poste</label>
+                                        <select class="form-control quantite" id="mm" name="posteId" required>
+                                            <option th:each="poste : ${posteList}"
+                                                    th:value="${poste.id}"
+                                                    th:text="${poste.nom}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputUserName">Taux horaire</label>
+                                        <input id="inputUserName" type="number" min="1" step="any" name="taux_horaire" data-parsley-trigger="change" required="" autocomplete="off" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputUserName">Date d'embauche</label>
+                                        <input id="inputUserName" type="date" name="date_embauche" data-parsley-trigger="change" required="" autocomplete="off" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-space btn-primary">Enregistrer</button>
                                     </div>
                                 </form>
                             </div>
@@ -121,7 +161,6 @@
         </div>
     </div>
     <!-- ============================================================== -->
-
     <!-- ============================================================== -->
 </div>
 <!-- ============================================================== -->
@@ -149,56 +188,6 @@
 <script th:src="@{/assets/vendor/parsley/parsley.js}"></script>
 <script th:src="@{/assets/libs/js/dashboard-influencer.js}"></script>
 <script th:src="@{/assets/libs/js/dashboard-influencer.js}"></script>
-<!-- Utilisation de th:block pour permettre l'évaluation de Thymeleaf -->
-<div th:each="unite, stat : ${unitePage.content}">
-    <!-- Identifier la modal avec un ID unique (par exemple, 'myModal-{index}') -->
-    <div id="myModal-[[${stat.index}]]" class="modal">
-        <div class="modal-content">
-            <!-- Utilisation de 'close-{index}' pour un identifiant unique -->
-            <span class="close" th:id="'close-' + ${stat.index}">&times;</span>
-            <form action="#" data-parsley-validate="">
-                <div class="form-group">
-                    <label for="inputUserName">Nom</label>
-                    <input type="text" name="name" data-parsley-trigger="change" required="" autocomplete="off" class="form-control">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-space btn-warning">Modifier</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<script th:inline="javascript">
-    // Cacher la modal lorsqu'on clique sur l'icône de fermeture
-document.querySelectorAll('[id^="close-"]').forEach(function(closeBtn) {
-    closeBtn.addEventListener('click', function() {
-        var index = closeBtn.id.split('-')[1];
-        var modal = document.getElementById('myModal-' + index);
-        if (modal) {
-            modal.style.display = 'none';
-        }
-    });
-});
-
-// Afficher la modal lorsqu'on clique sur le bouton "modifier"
-document.querySelectorAll('[id^="modifier"]').forEach(function(modifierBtn) {
-    modifierBtn.addEventListener('click', function() {
-        var index = modifierBtn.id.split('-')[1];
-        var modal = document.getElementById('myModal-' + index);
-        if (modal) {
-            modal.style.display = 'block';
-        }
-    });
-});
-
-// Cacher la modal lorsqu'on clique en dehors de celle-ci
-window.onclick = function(event) {
-    if (event.target.className === 'modal') {
-        event.target.style.display = 'none';
-    }
-};
-
-</script>
 </body>
 </html>

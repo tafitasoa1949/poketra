@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 
 <head>
     <!-- Required meta tags -->
@@ -17,6 +17,14 @@
     <link rel="stylesheet" th:href="@{/assets/vendor/fonts/flag-icon-css/flag-icon.min.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" th:href="@{/assets/libs/css/popup.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 300px; /* Ajustez la largeur selon vos besoins */
+            height: 300px; /* Ajustez la hauteur selon vos besoins */
+            margin-left : 600px;
+        }
+    </style>
     <title>Admin Poketra</title>
 </head>
 <body>
@@ -37,8 +45,8 @@
                         <div class="page-breadcrumb">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Matériels</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Unité</li>
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Statistique</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Client</li>
                                 </ol>
                             </nav>
                         </div>
@@ -50,13 +58,25 @@
             <!-- ============================================================== -->
             <div class="ecommerce-widget">
                 <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="lead">Produit : <span th:text="${statVente.produit.nom}"></span></p>
+                                <p class="lead">Homme : <span th:text="${statVente.homme}"></span> (<span th:text="${statVente.pourcentage_homme}"></span> %)</p>
+                                <p class="lead">Femme : <span th:text="${statVente.femme}"></span> (<span th:text="${statVente.pourcentage_femme}"></span> %)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <!-- ============================================================== -->
 
                     <!-- ============================================================== -->
 
                     <!-- recent orders  -->
+
                     <!-- ============================================================== -->
-                    <div class="col-xl-8 col-lg-12 col-md-6 col-sm-12 col-12">
+                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12">
                         <div class="card">
                             <h5 class="card-header">Listes</h5>
                             <div class="card-body p-0">
@@ -64,69 +84,45 @@
                                     <table class="table">
                                         <thead class="bg-light">
                                         <tr class="border-0">
-                                            <th class="border-0">Unite</th>
-                                            <th class="border-0"></th>
-                                            <th class="border-0"></th>
+                                            <th class="border-0">Client</th>
+                                            <th class="border-0">Genre</th>
+                                            <th class="border-0">Quantité</th>
+                                            <th class="border-0">Date</th>
                                         </tr>
                                         </thead>
-                                        <tbody th:if="${unitePage}">
-                                        <tr th:each="unite, rowStat : ${unitePage.content}">
-                                            <td th:text="${unite.nom}"></td>
-                                            <td>
-                                                <a class="btn btn-warning btn-rounded btn-fw"
-                                                   th:id="'modifier-' + ${rowStat.index}"
-                                                   th:attr="data-target='#myModal' + ${rowStat.index}">
-                                                    <i class="mdi mdi-autorenew"></i>
-                                                </a>
-                                            </td>
-                                            <td><a class="btn btn-danger btn-rounded btn-fw" th:href="@{/unite/delete/{id}(id=${unite.id})}"><i class="mdi mdi-delete"></i></a></td>
-                                        </tr>
+                                        <tbody>
+                                            <tr th:each="vente : ${venteList}">
+                                                <td th:text="${vente.client.nom}"></td>
+                                                <td th:text="${vente.client.genre}"></td>
+                                                <td th:text="${vente.quantite}"></td>
+                                                <td th:text="${#dates.format(vente.date, 'dd/MM/yyyy HH:mm')}"></td>
+                                            </tr>
                                         </tbody>
                                     </table>
-                                    <!-- Afficher la pagination -->
-                                    <!-- ... -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- ============================================================== -->
-                    <!-- end recent orders  -->
-
-
-                    <!-- ============================================================== -->
-                    <!-- ============================================================== -->
-                    <!-- customer acquistion  -->
-                    <!-- ============================================================== -->
-                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 col-12">
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">Nouveau</h5>
-                            <div class="card-body">
-                                <form th:action="@{/unite/insert}" method="post" id="basicform" data-parsley-validate="">
-                                    <div class="form-group">
-                                        <label for="inputUserName">Nom</label>
-                                        <input id="inputUserName" type="text" name="nom" data-parsley-trigger="change" required="" placeholder="Entrer un nom" autocomplete="off" class="form-control">
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-space btn-primary">Ajouter</button>
-                                    </div>
-                                </form>
+                            <h5 class="card-header">Statistique</h5>
+                            <div class="chart-container">
+                                <canvas id="myChart"></canvas>
                             </div>
                         </div>
                     </div>
-                    <!-- ============================================================== -->
-                    <!-- end customer acquistion  -->
-                    <!-- ============================================================== -->
                 </div>
             </div>
         </div>
+        <!-- ============================================================== -->
+
+        <!-- ============================================================== -->
     </div>
     <!-- ============================================================== -->
-
+    <!-- end wrapper  -->
     <!-- ============================================================== -->
-</div>
-<!-- ============================================================== -->
-<!-- end wrapper  -->
-<!-- ============================================================== -->
 </div>
 <!-- ============================================================== -->
 <!-- end main wrapper  -->
@@ -149,56 +145,28 @@
 <script th:src="@{/assets/vendor/parsley/parsley.js}"></script>
 <script th:src="@{/assets/libs/js/dashboard-influencer.js}"></script>
 <script th:src="@{/assets/libs/js/dashboard-influencer.js}"></script>
-<!-- Utilisation de th:block pour permettre l'évaluation de Thymeleaf -->
-<div th:each="unite, stat : ${unitePage.content}">
-    <!-- Identifier la modal avec un ID unique (par exemple, 'myModal-{index}') -->
-    <div id="myModal-[[${stat.index}]]" class="modal">
-        <div class="modal-content">
-            <!-- Utilisation de 'close-{index}' pour un identifiant unique -->
-            <span class="close" th:id="'close-' + ${stat.index}">&times;</span>
-            <form action="#" data-parsley-validate="">
-                <div class="form-group">
-                    <label for="inputUserName">Nom</label>
-                    <input type="text" name="name" data-parsley-trigger="change" required="" autocomplete="off" class="form-control">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-space btn-warning">Modifier</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
 <script th:inline="javascript">
-    // Cacher la modal lorsqu'on clique sur l'icône de fermeture
-document.querySelectorAll('[id^="close-"]').forEach(function(closeBtn) {
-    closeBtn.addEventListener('click', function() {
-        var index = closeBtn.id.split('-')[1];
-        var modal = document.getElementById('myModal-' + index);
-        if (modal) {
-            modal.style.display = 'none';
-        }
-    });
-});
+    /*<![CDATA[*/
+    var statVente = /*[[${statVente}]]*/ null; // Remplacez par le statVente approprié
 
-// Afficher la modal lorsqu'on clique sur le bouton "modifier"
-document.querySelectorAll('[id^="modifier"]').forEach(function(modifierBtn) {
-    modifierBtn.addEventListener('click', function() {
-        var index = modifierBtn.id.split('-')[1];
-        var modal = document.getElementById('myModal-' + index);
-        if (modal) {
-            modal.style.display = 'block';
-        }
-    });
-});
-
-// Cacher la modal lorsqu'on clique en dehors de celle-ci
-window.onclick = function(event) {
-    if (event.target.className === 'modal') {
-        event.target.style.display = 'none';
+    if (statVente) {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Homme(%)', 'Femme(%)'],
+                datasets: [{
+                    data: [statVente.pourcentage_homme, statVente.pourcentage_femme],
+                    backgroundColor: ['blue', 'pink']
+                }]
+            },
+            options: {
+                cutoutPercentage: 50, // Réglez ce pourcentage selon vos besoins
+            }
+        });
     }
-};
-
+    /*]]>*/
 </script>
+
 </body>
 </html>

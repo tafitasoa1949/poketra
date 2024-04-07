@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}">
+  <link th:href="@{/assets/vendor/fonts/circular-std/style.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/assets/libs/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/fontawesome-all.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/charts/chartist-bundle/chartist.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/charts/morris-bundle/morris.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/charts/c3charts/c3.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/fonts/flag-icon-css/flag-icon.min.css}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" th:href="@{/assets/libs/css/popup.css}">
+  <title>Admin Poketra</title>
+  <style>
+        #but {
+      margin-top : 25px;
+      font-size : 12px;
+    }
+    .quantite{
+      font-size : 16px;
+    }
+    #remove{
+      margin-top : 26px;
+      font-size : 12px;
+      width : 50px;
+    }
+    </style>
+</head>
+<body>
+<div th:replace="content/sidebar"></div>
+<!-- wrapper  -->
+<!-- ============================================================== -->
+<div class="dashboard-wrapper">
+  <div class="dashboard-ecommerce">
+    <div class="container-fluid dashboard-content ">
+      <!-- ============================================================== -->
+      <!-- pageheader  -->
+      <!-- ============================================================== -->
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="page-header">
+            <h2 class="pageheader-title">Gestion de vente</h2>
+            <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+            <div class="page-breadcrumb">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Produit</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Création</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ============================================================== -->
+      <!-- end pageheader  -->
+      <!-- ============================================================== -->
+      <div class="ecommerce-widget">
+        <div class="row">
+          <!-- ============================================================== -->
+          <!-- validation form -->
+          <!-- ============================================================== -->
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+              <h5 class="card-header">Créer les details d'un produit</h5>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
+                    <label>Produit : <span th:text="${nom}"></span></label>
+                    <input type="hidden" name="produit" th:value="${nom}">
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
+                    <label>Type : <span th:text="${type.nom}"></span></label>
+                    <input type="hidden" name="typeId" th:value="${type.id}">
+                  </div>
+                  <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
+                    <label>Look : <span th:text="${look.nom}"></span></label>
+                    <input type="hidden" name="lookId" th:value="${look.id}">
+                  </div>
+                </div>
+                <br>
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <label>Description </label>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <label><span th:text="${description}"></span></label>
+                    <input type="hidden" name="description" th:value="${description}">
+                  </div>
+                </div>
+                <br>
+                <div th:if="${error}" class="alert alert-danger">
+                  <p th:text="${error}"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ============================================================== -->
+          <!-- end validation form -->
+          <!-- ============================================================== -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- end footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- end wrapper  -->
+<!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- end main wrapper  -->
+<!-- ============================================================== -->
+
+<!-- Optional JavaScript -->
+<!-- jquery 3.3.1 -->
+<script th:src="@{/assets/vendor/jquery/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.js}"></script>
+<script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
+<script th:src="@{/assets/libs/js/main-js.js}"></script>
+<script th:src="@{/assets/vendor/charts/chartist-bundle/chartist.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/sparkline/jquery.sparkline.js}"></script>
+<script th:src="@{/assets/vendor/charts/morris-bundle/raphael.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/morris-bundle/morris.js}"></script>
+<script th:src="@{/assets/vendor/charts/c3charts/c3.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/c3charts/d3-5.4.0.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/c3charts/C3chartjs.js}"></script>
+<script th:src="@{/assets/libs/js/dashboard-ecommerce.js}"></script>
+<script th:src="@{/assets/vendor/parsley/parsley.js}"></script>
+<script th:src="@{/assets/libs/js/dashboard-influencer.js}"></script>
+<script th:src="@{/assets/libs/js/dashboard-influencer.js}"></script>
+<script th:inline="javascript">
+  let counter = 0;
+  function ajouterNouveauChamp(event){
+
+    counter++;
+    // Création du champ principale
+        const divRow = document.createElement('div');
+        divRow.classList.add('row');
+    // Création des éléments du champ de matière première
+        const divCol = document.createElement('div');
+        divCol.classList.add('col-xl-5', 'col-lg-5', 'col-md-12', 'col-sm-12', 'col-12', 'mb-3');
+        divRow.appendChild(divCol);
+
+        const label_Mat_P = document.createElement('label');
+        label_Mat_P.textContent = "Matière prémière";
+        label_Mat_P.setAttribute('id','mat_premiere_'+counter);
+        divCol.appendChild(label_Mat_P);
+
+        const select_Mat_P = document.createElement('select');
+        select_Mat_P.classList.add('form-control');
+        select_Mat_P.setAttribute('id','mat_premiere_'+counter);
+        select_Mat_P.setAttribute('name', 'matPremiere['+counter+']');
+        select_Mat_P.setAttribute('required', true);
+
+        // Parcourir la liste de tailles et créer des options pour chaque taille
+        var matPremiereLooks = /*[[${matPremiereLooks}]]*/ [];
+        matPremiereLooks.forEach(MPLook => {
+            const option = document.createElement('option');
+            option.value = MPLook.matPremiere.id;
+            option.textContent = MPLook.matPremiere.nom;
+            select_Mat_P.appendChild(option);
+        });
+
+        divCol.appendChild(select_Mat_P);
+
+
+    // Création des éléments du champ de quantite
+        const divCol_Quantite = document.createElement('div');
+        divCol_Quantite.classList.add('col-xl-5', 'col-lg-5', 'col-md-12', 'col-sm-12', 'col-12', 'mb-3');
+        divRow.appendChild(divCol_Quantite);
+
+        const label_Q = document.createElement('label');
+        label_Q.textContent = `Quantité`;
+        label_Q.setAttribute('id','quantite_'+counter);
+        divCol_Quantite.appendChild(label_Q);
+
+        const input_Q = document.createElement('input');
+        input_Q.classList.add('form-control','quantite');
+        input_Q.setAttribute('type', 'number');
+        input_Q.setAttribute('min', '1');
+        input_Q.setAttribute('name', 'quantite['+counter+']');
+        input_Q.setAttribute('id','quantite_'+counter);
+        input_Q.setAttribute('step', 'any');
+        input_Q.setAttribute('placeholder', '');
+        input_Q.setAttribute('required', true);
+        divCol_Quantite.appendChild(input_Q);
+
+        const invalidFeedback_Q = document.createElement('div');
+        invalidFeedback_Q.classList.add('invalid-feedback');
+        invalidFeedback_Q.textContent = 'Please provide a valid quantity.';
+        divCol_Quantite.appendChild(invalidFeedback_Q);
+
+        // Création du bouton de suppression
+          const divColSupprimer = document.createElement('div');
+          divColSupprimer.classList.add('col-xl-2', 'col-lg-2', 'col-md-12', 'col-sm-12', 'col-12', 'mb-3');
+          divRow.appendChild(divColSupprimer);
+          const boutonSupprimer = document.createElement('button');
+          boutonSupprimer.classList.add('btn', 'btn-danger');
+          boutonSupprimer.setAttribute('id','remove');
+          boutonSupprimer.onclick = function() {
+              divRow.remove(); // Supprimer le champ et le bouton associé
+          };
+
+          const icon = document.createElement('i');
+          icon.classList.add('fas','fa-times');
+          boutonSupprimer.appendChild(icon);
+          divColSupprimer.appendChild(boutonSupprimer);
+
+        // Sélection de l'élément où ajouter le champ de matière première
+        const nouveauChamp = document.getElementById('plus');
+        nouveauChamp.appendChild(divRow);
+
+    event.preventDefault();
+    console.log("huhhu");
+  }
+</script>
+</body>
+</html>

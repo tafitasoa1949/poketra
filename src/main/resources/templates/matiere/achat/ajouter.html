@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" th:href="@{/assets/vendor/bootstrap/css/bootstrap.min.css}">
+  <link th:href="@{/assets/vendor/fonts/circular-std/style.css}" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/assets/libs/css/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/fonts/fontawesome/css/fontawesome-all.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/charts/chartist-bundle/chartist.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/charts/morris-bundle/morris.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/charts/c3charts/c3.css}">
+  <link rel="stylesheet" th:href="@{/assets/vendor/fonts/flag-icon-css/flag-icon.min.css}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" th:href="@{/assets/libs/css/popup.css}">
+  <title>Admin Poketra</title>
+  <style>
+  </style>
+</head>
+<body>
+<div th:replace="content/sidebar"></div>
+<!-- wrapper  -->
+<!-- ============================================================== -->
+<div class="dashboard-wrapper">
+  <div class="dashboard-ecommerce">
+    <div class="container-fluid dashboard-content ">
+      <!-- ============================================================== -->
+      <!-- pageheader  -->
+      <!-- ============================================================== -->
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+          <div class="page-header">
+            <h2 class="pageheader-title">Gestion de vente</h2>
+            <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+            <div class="page-breadcrumb">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Achat</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Matière prémière</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ============================================================== -->
+      <!-- end pageheader  -->
+      <!-- ============================================================== -->
+      <div class="ecommerce-widget">
+        <div class="row">
+          <!-- ============================================================== -->
+          <!-- validation form -->
+          <!-- ============================================================== -->
+          <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+            <div class="card">
+              <h5 class="card-header">Achat matière prémière</h5>
+              <div class="card-body">
+                <form class="needs-validation" novalidate th:action="@{/achatMP/achat}" method="post">
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                      <label for="mm">Matière prémière</label>
+                      <select class="form-control quantite" id="mm" name="mat_premiere" required>
+                        <option th:each="matiere : ${matPremiereList}"
+                                th:value="${matiere.id}"
+                                th:text="${matiere.nom}">
+                        </option>
+                      </select>
+                      <div class="valid-feedback">
+                        Looks good!
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                      <label for="quantite">Quantite</label>
+                      <input type="text" class="form-control" name="quantite" id="quantite" placeholder="" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid zip.
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                      <label for="prix_unitaire">Prix Unitaire</label>
+                      <input type="number" step="any" class="form-control" name="prix" id="prix_unitaire" placeholder="" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid zip.
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                      <label for="date">Date</label>
+                      <input type="date" class="form-control" name="date" id="date" placeholder="" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid zip.
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                      <button class="btn btn-success" type="submit">Enregistrer</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- ============================================================== -->
+          <!-- end validation form -->
+          <!-- ============================================================== -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- end wrapper  -->
+<!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- end main wrapper  -->
+<!-- ============================================================== -->
+
+<!-- Optional JavaScript -->
+<!-- jquery 3.3.1 -->
+<script th:src="@{/assets/vendor/jquery/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/assets/vendor/bootstrap/js/bootstrap.bundle.js}"></script>
+<script th:src="@{/assets/vendor/slimscroll/jquery.slimscroll.js}"></script>
+<script th:src="@{/assets/libs/js/main-js.js}"></script>
+<script th:src="@{/assets/vendor/charts/chartist-bundle/chartist.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/sparkline/jquery.sparkline.js}"></script>
+<script th:src="@{/assets/vendor/charts/morris-bundle/raphael.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/morris-bundle/morris.js}"></script>
+<script th:src="@{/assets/vendor/charts/c3charts/c3.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/c3charts/d3-5.4.0.min.js}"></script>
+<script th:src="@{/assets/vendor/charts/c3charts/C3chartjs.js}"></script>
+<script th:src="@{/assets/libs/js/dashboard-ecommerce.js}"></script>
+<script th:src="@{/assets/vendor/parsley/parsley.js}"></script>
+<script th:src="@{/assets/libs/js/dashboard-influencer.js}"></script>
+<script th:src="@{/assets/libs/js/dashboard-influencer.js}"></script>
+</body>
+</html>
